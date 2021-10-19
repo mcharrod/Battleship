@@ -1,8 +1,10 @@
 class Cell
-  attr_reader :coordinate, :ship, :fired_upon
+  attr_reader :coordinate,
+              :ship,
+              :fired_upon
   def initialize(coordinate)
     @coordinate = coordinate
-    @ship = nil
+    @ship       = nil
     @fired_upon = false
   end
 
@@ -23,5 +25,7 @@ class Cell
     @fired_upon
   end
 
-  
+
+
+
 end
