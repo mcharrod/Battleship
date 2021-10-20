@@ -67,7 +67,7 @@ RSpec.describe Cell do
   it "renders reveal with true" do
     cell_2 = Cell.new("C3")
     expect(cell_2.render(true)).to eq("S")
-  end 
+  end
 
 
   it "renders with ship and sink" do
