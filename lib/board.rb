@@ -26,28 +26,43 @@ class Board
     @cells.has_key?(coordinate)
   end
 
-  def valid_placement?(ship, consecutive_cells)
-    if consecutive_cells.count != ship.length
+  def valid_placement?(ship, cells)
+    if cells.count != ship.length
       false
     end
   end
 
-
-  def valid_placement_numbers(ship, consecutive_cells)
+  def adjacent_letters?(cells)
     letters = []
     numbers = []
-    consecutive_cells.each do |cell|
+    cells.each do |cell|
       letters << cell[0] && numbers << cell[1].to_i
     end
-    
-    columns = numbers.sort.each_cons(2).all? do |num1, num2|
-      num2 - num1 == 1
-    end
-
-    # if gap.sum == 2 || z.sum == 1
-    #   return true
+      letters.sort.each_cons(2).all? do |char1, char2|
+      char2.ord - char1.ord == 1 && numbers.uniq.count == 1
     end
   end
+
+  def adjacent_numbers?(cells)
+    letters = []
+    numbers = []
+    cells.each do |cell|
+      letters << cell[0] && numbers << cell[1].to_i
+    end
+    numbers.sort.each_cons(2).all? do |num1, num2|
+      num2 - num1 == 1 && letters.uniq.count == 1
+    end
+  end
+
+  def valid_placement_numbers(ship, cells)
+  adjacent_letters?(cells) || adjacent_numbers?(cells)
+  end
+end
+
+
+
+
+
 
   #throw a sort in there
 
@@ -79,7 +94,7 @@ class Board
 
  # valid_placement_numbers?
 
- #   numbers = consecutive_cells.map do |cell|
+ #   numbers = cells.map do |cell|
    #    cell[1].to_i
    # end
    # numbers.each_cons(2) do |nums|
@@ -93,8 +108,26 @@ class Board
    #         end
    #         require "pry"; binding.pry
    #       end
-   #      x.count == consecutive_cells.length
+   #      x.count == cells.length
    #
    #       # return true
    #   end
    # end
+
+
+
+
+
+   # # letters = []
+   # # numbers = []
+   # # cells.each do |cell|
+   # #   letters << cell[0] && numbers << cell[1].to_i
+   # # end
+   #
+   # # columns = numbers.sort.each_cons(2).all? do |num1, num2|
+   # #     num2 - num1 == 1 && letters.uniq.count == 1
+   # #   end
+   #
+   # rows = letters.sort.each_cons(2).all? do |char1, char2|
+   #   char2.ord - char1.ord == 1 && numbers.uniq.count == 1
+   #    # require "pry"; binding.pry

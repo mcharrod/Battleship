@@ -39,8 +39,9 @@ RSpec.describe Board do
   it 'valid consecutive numbers' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-  #  expect(board.valid_placement_numbers?(cruiser, ["A1", "A2", "A3"])).to eq(true)
-    expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A4"])).to eq(false)
+     expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A9"])).to eq(false)
+     expect(board.valid_placement_numbers(cruiser, ["A1", "B2", "C3"])).to eq(false)
+     expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A3"])).to eq(true)
   end
 
 # letters not same  a1 b2 d3
@@ -56,6 +57,13 @@ RSpec.describe Board do
 # if letters are consecutive.... check if numbers are same
 # if numbers are consecutive.... check if letters are same
 
+
+# if letters same, numbers MUST BE consecutive.
+# if numbers same, letters MUST BE consecutive
+
+
+# taken care of: letters are next to eachother
+# taken care of: numbers are next to eachother
 # split the elements into sets of numbers and letters
 # array of letters
 # array of numbers
