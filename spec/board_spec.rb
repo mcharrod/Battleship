@@ -17,7 +17,7 @@ RSpec.describe Board do
     expect(board.cells.count).to eq(16)
   end
 
-  xit 'valid coordinate' do
+  it 'valid coordinate' do
     board = Board.new
     expect(board.valid_coordinate?("A1")).to be(true)
     expect(board.valid_coordinate?("E1")).to be(false)
@@ -26,21 +26,27 @@ RSpec.describe Board do
     expect(board.valid_coordinate?("A22")).to be(false)
   end
 
-  xit 'valid placement length' do
+  it 'valid placement length' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    # board.valid_placement?(cruiser, ["A1", "A2"])
+    board.valid_placement?(cruiser, ["A1", "A2"])
     board.valid_placement?(submarine, ["A2", "A3", "A4"])
-  #  expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
     expect(board.valid_placement?(submarine, ["A4", "A2", "A3"])).to eq(false)
   end
 
   it 'valid consecutive numbers' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-  #  expect(board.valid_placement_numbers?(cruiser, ["A1", "A2", "A3"])).to eq(true)
-    expect(board.valid_placement_numbers?(cruiser, ["A1", "A2", "A4"])).to eq(false)
+    submarine = Ship.new("Submarine", 2)
+     expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A3"])).to eq(true)
+    # expect(board.valid_placement_numbers?(cruiser, ["A4", "A3", "A2"])).to eq(true)
+     expect(board.valid_placement_numbers(submarine, ["A1", "A2"])).to eq(true)
+    expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A4"])).to eq(false)
+    expect(board.valid_placement_numbers(cruiser, ["A1", "A3", "A4"])).to eq(false)
+    expect(board.valid_placement_numbers(submarine, ["A1", "A4"])).to eq(false)
+
   end
 
 # letters not same  a1 b2 d3

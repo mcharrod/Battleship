@@ -1,5 +1,6 @@
 class Board
-  attr_reader :cells, :x
+  attr_reader :cells, :num_pair
+  attr_accessor :z
   def initialize
     @cells = {
       "A1" => Cell.new("A1"),
@@ -21,35 +22,45 @@ class Board
     }
   end
 
-  # def valid_coordinate?(coordinate)
-  #   @cells.has_key?(coordinate)
-  # end
+  def valid_coordinate?(coordinate)
+    @cells.has_key?(coordinate)
+  end
 
-  # def valid_placement?(ship, consecutive_cells)
-  #   # consecutive_cells.each do |cell|
-  #   if consecutive_cells.count != ship.length
-  #     false
-  #   end
-  # end
+  def valid_placement?(ship, consecutive_cells)
+    if consecutive_cells.count != ship.length
+      false
+    end
+  end
 
-  def valid_placement_numbers?(ship, consecutive_cells)
+  def valid_placement_numbers(ship, consecutive_cells)
     numbers = consecutive_cells.map do |cell|
-       cell[1].to_i
+      cell[1].to_i
     end
-    numbers.each_cons(2) do |nums|
-      # also tried nums.reject for first falsey
-      x = nums.all? do |num|
-               nums[1] - nums[0] == 1
-            end
-            if x != []
-              return true
-            elsif x == []
-              return false
-             # require "pry"; binding.pry
-           end
-        end
-      end
+    nested_pairs = []
+    x = numbers.each_cons(2) {|num_pair| nested_pairs << num_pair}
+    z = []
+    nested_pairs.each do |element|
+       z << element[1] -= element[0]
     end
+    if z.sum == 2 || z.sum == 1
+      return true
+    else
+      false
+  end
+end
+  end
+
+
+
+
+
+
+
+
+
+      # x = nums.all? do |num|
+      #          nums[1] - nums[0] == 1end
+
 
 
 
