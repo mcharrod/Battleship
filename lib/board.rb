@@ -32,25 +32,24 @@ class Board
     end
   end
 
+
   def valid_placement_numbers(ship, consecutive_cells)
-    numbers = consecutive_cells.map do |cell|
-      cell[1].to_i
+    letters = []
+    numbers = []
+    consecutive_cells.each do |cell|
+      letters << cell[0] && numbers << cell[1].to_i
     end
-    nested_pairs = []
-    x = numbers.sort.each_cons(2) {|num_pair| nested_pairs << num_pair}
-    z = []
-    nested_pairs.each do |element|
-       z << element[1] -= element[0]
+    
+    columns = numbers.sort.each_cons(2).all? do |num1, num2|
+      num2 - num1 == 1
     end
-    if z.sum == 2 || z.sum == 1
-      return true
-    else
-      false
+
+    # if gap.sum == 2 || z.sum == 1
+    #   return true
     end
   end
 
   #throw a sort in there
-end
 
 
 
