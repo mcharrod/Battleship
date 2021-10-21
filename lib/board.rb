@@ -1,5 +1,5 @@
 class Board
-  attr_reader :cells
+  attr_reader :cells, :x
   def initialize
     @cells = {
       "A1" => Cell.new("A1"),
@@ -21,16 +21,68 @@ class Board
     }
   end
 
-  def valid_coordinate?(coordinate)
-    @cells.has_key?(coordinate)
-  end
+  # def valid_coordinate?(coordinate)
+  #   @cells.has_key?(coordinate)
+  # end
 
-  def valid_placement?(ship, consecutive_cells)
-    require "pry"; binding.pry
-    if consecutive_cells.length != ship.length
-      false
-    elsif consecutive_cells
-  end 
-  end
+  # def valid_placement?(ship, consecutive_cells)
+  #   # consecutive_cells.each do |cell|
+  #   if consecutive_cells.count != ship.length
+  #     false
+  #   end
+  # end
 
-end
+  def valid_placement_numbers?(ship, consecutive_cells)
+    numbers = consecutive_cells.map do |cell|
+       cell[1].to_i
+    end
+    numbers.each_cons(2) do |nums|
+      # also tried nums.reject for first falsey
+      x = nums.all? do |num|
+               nums[1] - nums[0] == 1
+            end
+            if x != []
+              return true
+            elsif x == []
+              return false
+             # require "pry"; binding.pry
+           end
+        end
+      end
+    end
+
+
+
+
+# backup method
+#
+# letters.each_cons(ship.length) do |consecutive_letters|
+#    if consecutive_letters.count == ship.length
+#      true
+#   end
+
+
+
+
+
+ # valid_placement_numbers?
+
+ #   numbers = consecutive_cells.map do |cell|
+   #    cell[1].to_i
+   # end
+   # numbers.each_cons(2) do |nums|
+
+   #   # why is this returning an array w 2 elements instead of 3???
+   #   # test cruiser:
+   #   # expect(board.valid_placement_numbers?(cruiser, ["A1", "A2", "A3"])).to eq(true)
+   #
+   #   x = nums.find_all do |num|
+   #            nums[1] - nums[0] == 1
+   #         end
+   #         require "pry"; binding.pry
+   #       end
+   #      x.count == consecutive_cells.length
+   #
+   #       # return true
+   #   end
+   # end
