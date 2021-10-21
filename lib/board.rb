@@ -1,6 +1,5 @@
 class Board
-  attr_reader :cells, :num_pair
-  attr_accessor :z
+  attr_reader :cells
   def initialize
     @cells = {
       "A1" => Cell.new("A1"),
@@ -57,81 +56,7 @@ class Board
       num2 - num1 == 1 && letters.uniq.count == 1
     end
   end
-  
-  # def valid_placement_numbers(ship, cells)
-  # adjacent_letters?(cells) || adjacent_numbers?(cells)
-  # end
 end
 
 
 
-
-
-
-  #throw a sort in there
-
-
-
-
-
-
-
-
-
-      # x = nums.all? do |num|
-      #          nums[1] - nums[0] == 1end
-
-
-
-
-
-# backup method
-#
-# letters.each_cons(ship.length) do |consecutive_letters|
-#    if consecutive_letters.count == ship.length
-#      true
-#   end
-
-
-
-
-
- # valid_placement_numbers?
-
- #   numbers = cells.map do |cell|
-   #    cell[1].to_i
-   # end
-   # numbers.each_cons(2) do |nums|
-
-   #   # why is this returning an array w 2 elements instead of 3???
-   #   # test cruiser:
-   #   # expect(board.valid_placement_numbers?(cruiser, ["A1", "A2", "A3"])).to eq(true)
-   #
-   #   x = nums.find_all do |num|
-   #            nums[1] - nums[0] == 1
-   #         end
-   #         require "pry"; binding.pry
-   #       end
-   #      x.count == cells.length
-   #
-   #       # return true
-   #   end
-   # end
-
-
-
-
-
-   # # letters = []
-   # # numbers = []
-   # # cells.each do |cell|
-   # #   letters << cell[0] && numbers << cell[1].to_i
-   # # end
-   #
-   # # columns = numbers.sort.each_cons(2).all? do |num1, num2|
-   # #     num2 - num1 == 1 && letters.uniq.count == 1
-   # #   end
-   #
-   # rows = letters.sort.each_cons(2).all? do |char1, char2|
-   #   char2.ord - char1.ord == 1 && numbers.uniq.count == 1
-   #    # require "pry"; binding.pry

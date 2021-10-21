@@ -57,44 +57,6 @@ RSpec.describe Board do
     # adjacent letters returns true
     expect(board.valid_placement?(submarine, ["A4", "B4"])).to eq(true)
     expect(board.valid_placement?(cruiser, ["A1", "B1", "C1"])).to eq(true)
-
   end
 end
 
-# letters not same  a1 b2 d3
-# numbers not same
-# a1 b1 c1
-
-#check if numbers are same OR next to eachother
-#check if letters are same OR  next to eachother
-
-# letters must be same or consecutive && numbers must be same or consecutive
-
-# base principlpe :
-# if letters are consecutive.... check if numbers are same
-# if numbers are consecutive.... check if letters are same
-
-
-# if letters same, numbers MUST BE consecutive.
-# if numbers same, letters MUST BE consecutive
-
-
-# taken care of: letters are next to eachother
-# taken care of: numbers are next to eachother
-# split the elements into sets of numbers and letters
-# array of letters
-# array of numbers
-# check if letters are all same
-# if letters are same,
-# numbers must be consecutive; use numbers.sort
-# check if numbers are all same
-# if numbers are same,
-# letters must be consecutive.
-
-# consecutive numbers strat:
-# make pairs in arrays
-# subtract first number from second number
-# if diff is not equal to 1,
-# numbers are not consecutive.
-
-# do the same with the lettters ords
