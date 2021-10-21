@@ -37,7 +37,7 @@ class Board
       cell[1].to_i
     end
     nested_pairs = []
-    x = numbers.each_cons(2) {|num_pair| nested_pairs << num_pair}
+    x = numbers.sort.each_cons(2) {|num_pair| nested_pairs << num_pair}
     z = []
     nested_pairs.each do |element|
        z << element[1] -= element[0]
@@ -46,9 +46,11 @@ class Board
       return true
     else
       false
+    end
   end
+
+  #throw a sort in there
 end
-  end
 
 
 
