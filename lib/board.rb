@@ -29,6 +29,10 @@ class Board
   def valid_placement?(ship, cells)
     if cells.count != ship.length
       false
+    elsif adjacent_letters?(cells) || adjacent_numbers?(cells)
+      true
+    else
+      false
     end
   end
 
@@ -53,10 +57,10 @@ class Board
       num2 - num1 == 1 && letters.uniq.count == 1
     end
   end
-
-  def valid_placement_numbers(ship, cells)
-  adjacent_letters?(cells) || adjacent_numbers?(cells)
-  end
+  
+  # def valid_placement_numbers(ship, cells)
+  # adjacent_letters?(cells) || adjacent_numbers?(cells)
+  # end
 end
 
 

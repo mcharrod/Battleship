@@ -26,23 +26,40 @@ RSpec.describe Board do
     expect(board.valid_coordinate?("A22")).to be(false)
   end
 
-  it 'valid placement length' do
+  it 'valid placement false' do
     board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    # board.valid_placement?(cruiser, ["A1", "A2"])
-    board.valid_placement?(submarine, ["A2", "A3", "A4"])
-  #  expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
-    expect(board.valid_placement?(submarine, ["A4", "A2", "A3"])).to eq(false)
+    cruiser = Ship.new("Cruiser", 3)
+    # length issues return false
+    expect(board.valid_placement?(submarine, ["A1", "A2", "A3"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
+    # letter gaps return false
+    expect(board.valid_placement?(submarine, ["A4", "C4"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A1", "B1", "D1"])).to eq(false)
+    # number gaps return false
+    expect(board.valid_placement?(submarine, ["A4", "A2"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A4", "A1", "A2"])).to eq(false)
+    # diagonals return false
+    expect(board.valid_placement?(submarine, ["A1", "B2"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to eq(false)
   end
 
-  it 'valid consecutive numbers' do
+  it 'valid placement true' do
     board = Board.new
+    submarine = Ship.new("Submarine", 2)
     cruiser = Ship.new("Cruiser", 3)
-     expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A9"])).to eq(false)
-     expect(board.valid_placement_numbers(cruiser, ["A1", "B2", "C3"])).to eq(false)
-     expect(board.valid_placement_numbers(cruiser, ["A1", "A2", "A3"])).to eq(true)
+    # appropriate length returns true
+    expect(board.valid_placement?(submarine, ["A1", "A2"])).to eq(true)
+    expect(board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to eq(true)
+    # adjacent numbers returns true
+    expect(board.valid_placement?(submarine, ["A1", "A2"])).to eq(true)
+    expect(board.valid_placement?(cruiser, ["A4", "A3", "A2"])).to eq(true)
+    # adjacent letters returns true
+    expect(board.valid_placement?(submarine, ["A4", "B4"])).to eq(true)
+    expect(board.valid_placement?(cruiser, ["A1", "B1", "C1"])).to eq(true)
+
   end
+end
 
 # letters not same  a1 b2 d3
 # numbers not same
@@ -81,6 +98,3 @@ RSpec.describe Board do
 # numbers are not consecutive.
 
 # do the same with the lettters ords
-
-
-end
