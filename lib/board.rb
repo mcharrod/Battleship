@@ -25,32 +25,33 @@ class Board
     @cells.has_key?(coordinate)
   end
 
-  def valid_placement?(ship, cells)
-    if cells.count != ship.length
-      false
-    elsif adjacent_letters?(cells) || adjacent_numbers?(cells)
+  def valid_placement?(ship, coordinates)
+    return false if coordinates.count != ship.length
+    return false if overlap?(coordinates) == true
+
+    if adjacent_letters?(coordinates) || adjacent_numbers?(coordinates)
       true
     else
       false
     end
   end
 
-  def adjacent_letters?(cells)
+  def adjacent_letters?(coordinates)
     letters = []
     numbers = []
-    cells.each do |cell|
-      letters << cell[0] && numbers << cell[1].to_i
+    coordinates.each do |coordinate|
+      letters << coordinate[0] && numbers << coordinate[1].to_i
     end
       letters.sort.each_cons(2).all? do |char1, char2|
       char2.ord - char1.ord == 1 && numbers.uniq.count == 1
     end
   end
 
-  def adjacent_numbers?(cells)
+  def adjacent_numbers?(coordinates)
     letters = []
     numbers = []
-    cells.each do |cell|
-      letters << cell[0] && numbers << cell[1].to_i
+    coordinates.each do |coordinate|
+      letters << coordinate[0] && numbers << coordinate[1].to_i
     end
     numbers.sort.each_cons(2).all? do |num1, num2|
       num2 - num1 == 1 && letters.uniq.count == 1
@@ -58,6 +59,7 @@ class Board
   end
 
   def place(ship, coordinates)
+    if valid_placement?(ship, coordinates) == true
     coordinates.each do |coord|
       matching_coords = @cells.find_all do |cell|
         cell[1].coordinate == coord
@@ -65,14 +67,16 @@ class Board
       matching_coords.each do |cell_object|
         cell_object[1].place_ship(ship)
       end
+      end 
+    end
+  end
+
+  def overlap?(coordinates)
+    coordinates.any? do |coordinate|
+      @cells[coordinate].ship != nil
     end
   end
 end
-    # first step: break the coordinates["A1","B1"] out of the array to work with coord string 'A1'
-    # second: compare the coordinate to the hash key use has_key?(key we are looking for is feom the coordinates arg)
-    # third: for that hash key, compare coordinates.
-    # fourth: if the passed in argument == the individual cell.coordinate, cell.place ship
-
 
 
 

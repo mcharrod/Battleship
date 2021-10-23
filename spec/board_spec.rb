@@ -31,6 +31,9 @@ RSpec.describe Board do
     board = Board.new
     submarine = Ship.new("Submarine", 2)
     cruiser = Ship.new("Cruiser", 3)
+    # board.place(cruiser, ["A1", "A2", "A3"])
+    # expect(board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to eq(true)
+    expect(board.valid_placement?(submarine, ["A1,B1"])).to eq(false)
     # length issues return false
     expect(board.valid_placement?(submarine, ["A1", "A2", "A3"])).to eq(false)
     expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
@@ -43,6 +46,7 @@ RSpec.describe Board do
     # diagonals return false
     expect(board.valid_placement?(submarine, ["A1", "B2"])).to eq(false)
     expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to eq(false)
+    #invalid overlapping placement
   end
 
   it 'valid placement true' do
@@ -59,6 +63,7 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, ["A4", "B4"])).to eq(true)
     expect(board.valid_placement?(cruiser, ["A1", "B1", "C1"])).to eq(true)
   end
+
 
   it "place_ship" do
     board = Board.new
@@ -81,6 +86,17 @@ RSpec.describe Board do
     expect(cell_4.ship == cell_5.ship).to eq(true)
     expect(cell_1.ship == cell_4.ship).to eq(false)
     expect(cell_16.ship).to eq(nil)
+  end
+
+  it "overlap" do
+    board = Board.new
+    cruiser = Ship.new("MemeCruiser", 3)
+    cruiser2 = Ship.new("Badcruiser", 3)
+    cell_1 = board.cells["C1"]
+    board.place(cruiser, ["C1", "C2", "C3"])
+    expect(board.valid_placement?(cruiser2, ["C1", "C2", "C3"])).to eq(false)
+    board.place(cruiser2,["C1", "C2", "C3"] )
+    expect(cell_1.ship).to eq(cruiser)
   end
 
 end
