@@ -92,9 +92,8 @@ class Board
       "D #{@cells["D1"].render(reveal)} #{@cells["D2"].render(reveal)} #{@cells["D3"].render(reveal)} #{@cells["D4"].render(reveal)}\n"
     end
     board_render
+    require "pry"; binding.pry
   end
-
-
 end
 
 
