@@ -46,7 +46,9 @@ RSpec.describe Board do
     # diagonals return false
     expect(board.valid_placement?(submarine, ["A1", "B2"])).to eq(false)
     expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to eq(false)
-    #invalid overlapping placement
+    #invalid duplicate
+    expect(board.valid_placement?(submarine, ["A1", "A1"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A1", "A1", "A2"])).to eq(false)
   end
 
   it 'valid placement true' do
@@ -98,6 +100,21 @@ RSpec.describe Board do
     board.place(cruiser2,["C1", "C2", "C3"] )
     expect(cell_1.ship).to eq(cruiser)
   end
+
+  it "render" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    expect(board.render).to eq("  1 2 3 4 \nA . . . .\nB . . . .\nC . . . .\nD . . . .\n")
+    expect(board.render(true)).to eq("  1 2 3 4 \nA S S S .\nB . . . .\nC . . . .\nD . . . .\n")
+  end
+
+  #NEEEDS FIRE UPON GUARD STATEMENT FOR DUPLICATE FIRINGS
+
+
+
+
+
 
 end
 

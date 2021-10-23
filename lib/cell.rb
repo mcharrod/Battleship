@@ -28,7 +28,7 @@ class Cell
   end
 
   def render(reveal = false)
-    return "S" if reveal == true
+    return "S" if reveal == true && !empty?
       if fired_upon? == false
         "."
       elsif fired_upon? && empty?
