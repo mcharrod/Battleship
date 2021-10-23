@@ -17,9 +17,12 @@ class Cell
   end
 
   def fire_upon
-    @fired_upon = true
-    if @ship != nil
-      @ship.hit
+    if fired_upon == true
+      return
+    end
+      @fired_upon = true
+      if @ship != nil
+        @ship.hit
     end
   end
 
@@ -28,7 +31,7 @@ class Cell
   end
 
   def render(reveal = false)
-    return "S" if reveal == true
+    return "S" if reveal == true && !empty?
       if fired_upon? == false
         "."
       elsif fired_upon? && empty?
