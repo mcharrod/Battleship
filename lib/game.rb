@@ -15,15 +15,16 @@ class Game
      elsif guess == "q"
        exit
      else
-       puts "Invalid input."
+       puts "Invalid input. Try again!"
+       welcome_message
      end
    end
 
   #
-  # def cpu_generate_ships
+  # def cpu_generate_ships -- CHRIS
   # end
   #
-  # def user_ship_input
+  # def user_ship_input -- KATY
   # end
   #
   # def take_turns
