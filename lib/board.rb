@@ -56,7 +56,26 @@ class Board
       num2 - num1 == 1 && letters.uniq.count == 1
     end
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coord|
+      matching_coords = @cells.find_all do |cell|
+        cell[1].coordinate == coord
+      end
+      matching_coords.each do |cell_object|
+        cell_object[1].place_ship(ship)
+      end
+    end
+  end
 end
+    # first step: break the coordinates["A1","B1"] out of the array to work with coord string 'A1'
+    # second: compare the coordinate to the hash key use has_key?(key we are looking for is feom the coordinates arg)
+    # third: for that hash key, compare coordinates.
+    # fourth: if the passed in argument == the individual cell.coordinate, cell.place ship
+
+
+
+
 
 
 

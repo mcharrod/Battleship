@@ -9,6 +9,7 @@ RSpec.describe Board do
     expect(board).to be_a(Board)
   end
 
+
   it 'cells' do
     board = Board.new
     expect(board.cells).to be_a(Hash)
@@ -58,5 +59,29 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, ["A4", "B4"])).to eq(true)
     expect(board.valid_placement?(cruiser, ["A1", "B1", "C1"])).to eq(true)
   end
+
+  it "place_ship" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.place(cruiser, ["C1", "C2", "C3"])
+    board.place(submarine, ["B1", "B2"])
+    cell_1 = board.cells["C1"]
+    cell_2 = board.cells["C2"]
+    cell_3 = board.cells["C3"]
+    cell_4 = board.cells["B1"]
+    cell_5 = board.cells["B2"]
+    cell_16 = board.cells["D4"]
+    expect(cell_1.ship).to eq(cruiser)
+    expect(cell_2.ship).to eq(cruiser)
+    expect(cell_3.ship).to eq(cruiser)
+    expect(cell_4.ship).to eq(submarine)
+    expect(cell_5.ship).to eq(submarine)
+    expect(cell_3.ship == cell_2.ship).to eq(true)
+    expect(cell_4.ship == cell_5.ship).to eq(true)
+    expect(cell_1.ship == cell_4.ship).to eq(false)
+    expect(cell_16.ship).to eq(nil)
+  end
+
 end
 
