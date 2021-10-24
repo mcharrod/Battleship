@@ -1,7 +1,7 @@
 class Game
   attr_reader :human_board,
               :cpu_board
-  def initialize
+  def initialize#(human_board, cpu_board)
     @human_board = Board.new
     @cpu_board = Board.new
   end
@@ -9,10 +9,10 @@ class Game
    def welcome_message
      puts "Welcome to BATTLESHIP \n" +
      "Enter p to play. Enter q to quit."
-      guess = gets.chomp
-     if guess == "p"
-       puts "we playin mofo"
-     elsif guess == "q"
+      menu_select = $stdin.gets.chomp
+     if menu_select == "p"
+       puts "game on!"
+     elsif menu_select == "q"
        exit
      else
        puts "Invalid input."
