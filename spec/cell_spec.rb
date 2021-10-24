@@ -47,6 +47,17 @@ RSpec.describe Cell do
     expect(cell.ship.health).to eq(2)
   end
 
+  it 'does not fire upon same coordinate' do
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.place_ship(cruiser)
+    cell.fire_upon
+    expect(cell.fired_upon?).to eq(true)
+    expect(cell.ship.health).to eq(2)
+    cell.fire_upon
+    expect(cell.ship.health).to eq(2)
+  end
+
   it 'renders without ship' do
     cell_1 = Cell.new("B4")
     cell_1.render
@@ -82,9 +93,4 @@ RSpec.describe Cell do
     expect(cruiser.sunk?).to eq(true)
     expect(cell_2.render).to eq("X")
   end
-
-
-  end
-
-
-
+end
