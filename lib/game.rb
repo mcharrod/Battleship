@@ -20,8 +20,14 @@ class Game
      end
    end
 
-   # user_placement_ship
-   # def user_ship_input
+    # user_place_ships
+    def user_place_ships
+      "\nI have laid out my ships on the grid."   +
+      "\nYou now need to lay out your two ships." +
+      "\nThe Cruiser is three units long and the" +
+      "\nSubmarine is two units long."
+      human_board.render
+    end
    # place your ships!
    #
 
