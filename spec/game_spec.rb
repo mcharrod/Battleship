@@ -13,18 +13,16 @@ RSpec.describe Game do
     expect(game).to be_a(Game)
   end
 
-  # it 'board' do
+  # it 'has a board' do
   #   human_board = Board.new
-  #   cpu_board = Board.new
-  #   game = Game.new(human_board, cpu_board)
+  #   game = Game.new
   #   expect(game.human_board).to be_a(Board)
   #   expect(game.cpu_board).to be_a(Board)
-  #   cruiser = Ship.new("MemeCruiser", 3)
   #   human_board.place(cruiser, ["A1", "A2", "A3"])
   # end
 
 
-    it 'boards' do
+    it 'makes two boards' do
       game = Game.new
       expect(game.human_board).to be_a(Board)
       expect(game.cpu_board).to be_a(Board)

@@ -30,7 +30,12 @@ class Game
       puts human_board.render
       "Enter the squares for the Cruiser (3 spaces):"
       puts "> "
-      place_ship = $stdin.gets.chomp
+      human_ship1 = $stdin.gets.chomp
+      # if human_ship1 != human_board.valid_coordinate?
+      # puts "please enter coordinates on the grid."
+      # puts " >"
+      # human_board.place
+      #
     end
 
 
