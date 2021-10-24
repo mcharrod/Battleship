@@ -6,7 +6,7 @@ class Game
     @cpu_board   = Board.new
     @cpu_cruiser = Ship.new("Cruiser", 3)
     @cpu_submarine = Ship.new("Submarine", 2)
-    @cruiser_cords = []
+    @cruiser_cords = ["A1"]
   end
 
   def welcome_message
@@ -27,14 +27,37 @@ class Game
    end
 
    def cpu_generate_ships
-      @cruiser_cords << @cpu_board.cells.keys.sample
-      until @cpu_board.valid_placement?(@cpu_cruiser, @cruiser_cords) == false
-        require "pry"; binding.pry
-        cpu_generate_ships
-      end
-      @cpu_board.place(@cruiser, @cruiser_cords)
+     if @cpu_board.cells[@cruiser_cords.join].nil?
+        @cruiser_cords.length.times do
+          @cruiser_cords << @cpu_board.cells.keys.sample
+        end
+        cpu_generate_ships_valid
       end
     end
+
+    def cpu_generate_ships_valid
+      if @cpu_board.valid_placement?(@cpu_cruiser, @cruiser_cords)
+        @cpu_board.place(@cruiser, @cruiser_cords)
+      else
+        cpu_generate_ships
+      end
+    end
+  end
+
+
+
+  #   def cpu_generate_ships
+  #     loop do
+  #       @cruiser_cords
+  #       until @cruiser_cords.length == @cpu_cruiser.length do
+  #         @cruiser_cords << @cpu_board.cells.keys.sample
+  #       end
+  #       if @cpu_board.valid_placement?(@cpu_cruiser, @cruiser_cords)
+  #         @cpu_board.place(@cpu_board, @cruiser_cords)
+  #         break
+  #       end
+  #   end
+  # end
 
 
   #
