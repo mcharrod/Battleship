@@ -2,7 +2,6 @@ require './lib/board'
 require './lib/ship'
 require './lib/cell'
 require './lib/game'
-# require 'battleship_runner.rb'
 
 RSpec.describe Game do
 
@@ -10,7 +9,7 @@ RSpec.describe Game do
     board = Board.new
     human_board = Board.new
     cpu_board = Board.new
-    game = Game.new(human_board, cpu_board)
+    game = Game.new
     expect(game).to be_a(Game)
   end
 

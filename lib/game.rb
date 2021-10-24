@@ -1,7 +1,7 @@
 class Game
   attr_reader :human_board,
               :cpu_board
-  def initialize#(human_board, cpu_board)
+  def initialize
     @human_board = Board.new
     @cpu_board = Board.new
   end
@@ -16,14 +16,25 @@ class Game
        exit
      else
        puts "Invalid input."
+       welcome_message
      end
    end
 
+   # user_placement_ship
+   # def user_ship_input
+   # place your ships!
+   #
+
+   # useful methods: render to print board
+   # check if valid placement
+   # display board with placed ships
+   # prompt to place ships w coordinates like so:
+   # A1, C5, board goes from A1 to D4
+       # if valid coord
+
   #
   # def cpu_generate_ships
-  # end
-  #
-  # def user_ship_input
+
   # end
   #
   # def take_turns
