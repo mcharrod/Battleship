@@ -1,12 +1,13 @@
+require './lib/board'
+
 class Game
   attr_reader :human_board,
-              :cpu_board
+              :cpu_board,
+              :cruiser_cords
   def initialize
     @human_board = Board.new
     @cpu_board   = Board.new
-    @cpu_cruiser = Ship.new("Cruiser", 3)
-    @cpu_submarine = Ship.new("Submarine", 2)
-    @cruiser_cords = ["A1"]
+    # @cpu_submarine = Ship.new("Submarine", 2)
   end
 
   def welcome_message
@@ -26,38 +27,34 @@ class Game
      end
    end
 
-   def cpu_generate_ships
-     if @cpu_board.cells[@cruiser_cords.join].nil?
-        @cruiser_cords.length.times do
-          @cruiser_cords << @cpu_board.cells.keys.sample
-        end
-        cpu_generate_ships_valid
+
+  def cpu_generate_ships
+    cpu_cruiser = Ship.new("Cruiser", 3)
+    loop do
+      cruiser_cords = []
+      until cruiser_cords.length == cpu_cruiser.length do
+        cruiser_cords << @cpu_board.cells.keys.sample
+      end
+      if @cpu_board.valid_placement?(cpu_cruiser, cruiser_cords)
+        @cpu_board.place(cpu_cruiser, cruiser_cords)
+        break
       end
     end
-
-    def cpu_generate_ships_valid
-      if @cpu_board.valid_placement?(@cpu_cruiser, @cruiser_cords)
-        @cpu_board.place(@cruiser, @cruiser_cords)
-      else
-        cpu_generate_ships
+    cpu_sub = Ship.new("Submarine", 2)
+    loop do
+      sub_cords = []
+      until sub_cords.length == cpu_sub.length do
+        sub_cords << @cpu_board.cells.keys.sample
+      end
+      if @cpu_board.valid_placement?(cpu_sub, sub_cords)
+        @cpu_board.place(cpu_sub, sub_cords)
+        break
       end
     end
   end
 
 
-
-  #   def cpu_generate_ships
-  #     loop do
-  #       @cruiser_cords
-  #       until @cruiser_cords.length == @cpu_cruiser.length do
-  #         @cruiser_cords << @cpu_board.cells.keys.sample
-  #       end
-  #       if @cpu_board.valid_placement?(@cpu_cruiser, @cruiser_cords)
-  #         @cpu_board.place(@cpu_board, @cruiser_cords)
-  #         break
-  #       end
-  #   end
-  # end
+end
 
 
   #

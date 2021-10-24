@@ -23,14 +23,11 @@ RSpec.describe Game do
 
   it "cpu_generate_ships" do
     game = Game.new
-    expect(game.cpu_generate_ships)
+    game.cpu_generate_ships
+    expect(game.cpu_board.cells.count {|key, value| value.ship != nil}).to eq(5)
   end
 
-  it "cpu_valid" do
-    game = Game.new
-    expect(game.cpu_board.cells.empty?).to be(false)
-    require "pry"; binding.pry
-  end
+
 
 
 
