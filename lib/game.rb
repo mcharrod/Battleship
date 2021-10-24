@@ -22,12 +22,19 @@ class Game
 
     # user_place_ships
     def user_place_ships
-      "\nI have laid out my ships on the grid."   +
-      "\nYou now need to lay out your two ships." +
-      "\nThe Cruiser is three units long and the" +
-      "\nSubmarine is two units long."
-      human_board.render
+      puts "\n"
+      puts "I have laid out my ships on the grid."
+      puts "You now need to lay out your two ships."
+      puts "The Cruiser is three units long and the"
+      puts "Submarine is two units long."
+      puts human_board.render
+      "Enter the squares for the Cruiser (3 spaces):"
+      puts "> "
+      place_ship = $stdin.gets.chomp
     end
+
+
+
    # place your ships!
    #
 

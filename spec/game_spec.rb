@@ -45,13 +45,29 @@ RSpec.describe Game do
       game = Game.new
       human_board = Board.new
       cpu_board = Board.new
-      prompt = "\nI have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the\nSubmarine is two units long."
-      puts game.user_place_ships
-      expect(game.user_place_ships).to eq(human_board.render)
+      game.user_place_ships
       # expect(game.user_place_ships).to eq($stdin.gets.chomp)
     end
+    #
+    # it 'places ship on valid coordinates only'
+    # game = Game.new
+    # human_board = Board.new
+    #
+    # let(:account) { Account.new(user) }
 
-    xit 'places valid placements' do
-     allow($stdin).to receive(:gets) { board }
+# it 'has a name' do
+#   allow(user).to receive(:name).and_return('Tweedledee')
+#   expect(account.name).to eq 'Tweedledee'
+# end
+
+    it 'takes input and places ship on valid coords' do
+      game = Game.new
+      human_board = Board.new
+      # welcome_message
+      expect(human_board.keys).to include(player_input)
     end
+
+    # xit 'places valid placements' do
+    #  allow($stdin).to receive(:gets) { board }
+    # end
   end
