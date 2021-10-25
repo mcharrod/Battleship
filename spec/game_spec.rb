@@ -2,6 +2,7 @@ require './lib/board'
 require './lib/ship'
 require './lib/cell'
 require './lib/game'
+require './lib/cpu_player'
 
 RSpec.describe Game do
   it "exists" do
@@ -15,23 +16,12 @@ RSpec.describe Game do
     expect(game.cpu_board).to be_a(Board)
   end
 
-  xit "welcome_message" do
+  it 'cpu player' do
     game = Game.new
-    expect(game.welcome_message)
-    #not sure about testing yet, requires input
+    expect(game.cpu_player).to be_a(CpuPlayer)
   end
 
-  it "cpu_generate_cruiser" do
-    game = Game.new
-    game.cpu_generate_cruiser
-    expect(game.cpu_board.cells.count {|key, value| value.ship != nil}).to eq(3)
-  end
 
-  it "cpu_generate_sub" do
-    game = Game.new
-    game.cpu_generate_sub
-    expect(game.cpu_board.cells.count {|key, value| value.ship != nil}).to eq(2)
-  end
 
   it "cpu_shot" do
     game = Game.new
