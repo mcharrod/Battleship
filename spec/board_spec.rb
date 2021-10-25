@@ -49,6 +49,9 @@ RSpec.describe Board do
     #invalid duplicate
     expect(board.valid_placement?(submarine, ["A1", "A1"])).to eq(false)
     expect(board.valid_placement?(cruiser, ["A1", "A1", "A2"])).to eq(false)
+    # invalid backwards
+    expect(board.valid_placement?(submarine, ["A2", "A1"])).to eq(false)
+    expect(board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to eq(false)
   end
 
   it 'valid placement true' do
@@ -60,7 +63,7 @@ RSpec.describe Board do
     expect(board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to eq(true)
     # adjacent numbers returns true
     expect(board.valid_placement?(submarine, ["A1", "A2"])).to eq(true)
-    expect(board.valid_placement?(cruiser, ["A4", "A3", "A2"])).to eq(true)
+    expect(board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to eq(true)
     # adjacent letters returns true
     expect(board.valid_placement?(submarine, ["A4", "B4"])).to eq(true)
     expect(board.valid_placement?(cruiser, ["A1", "B1", "C1"])).to eq(true)
@@ -116,4 +119,3 @@ RSpec.describe Board do
 
 
 end
-

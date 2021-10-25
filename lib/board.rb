@@ -49,7 +49,7 @@ class Board
     coordinates.each do |coordinate|
       letters << coordinate[0] && numbers << coordinate[1].to_i
     end
-      letters.sort.each_cons(2).all? do |char1, char2|
+      letters.each_cons(2).all? do |char1, char2|
       char2.ord - char1.ord == 1 && numbers.uniq.count == 1
     end
   end
@@ -60,7 +60,7 @@ class Board
     coordinates.each do |coordinate|
       letters << coordinate[0] && numbers << coordinate[1].to_i
     end
-    numbers.sort.each_cons(2).all? do |num1, num2|
+    numbers.each_cons(2).all? do |num1, num2|
       num2 - num1 == 1 && letters.uniq.count == 1
     end
   end
@@ -92,9 +92,3 @@ class Board
       "D #{@cells["D1"].render(reveal)} #{@cells["D2"].render(reveal)} #{@cells["D3"].render(reveal)} #{@cells["D4"].render(reveal)}\n"
   end
 end
-
-
-
-
-
-
