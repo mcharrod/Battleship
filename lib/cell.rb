@@ -31,15 +31,16 @@ class Cell
   end
 
   def render(reveal = false)
-    return "S" if reveal == true && !empty?
-      if fired_upon? == false
+      if reveal == true && !empty?
+        "\033[36m#{"S"}\033[0m" #needs test refactoring
+      elsif fired_upon? == false
         "."
       elsif fired_upon? && empty?
-        "M"
+        "\033[35m#{"M"}\033[0m"
       elsif fired_upon? && @ship.sunk? == false && empty? == false
-        "H"
+        "\033[31m#{"H"}\033[0m"
       elsif @ship.sunk?
-        "X"
+        "\033[31m#{"X"}\033[0m"
     end
   end
 end

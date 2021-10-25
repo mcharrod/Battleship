@@ -148,7 +148,6 @@ class Game
     @human_board.cells[firing_coords].fire_upon
     if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
       puts "Shot was a miss!"
-      require "pry"; binding.pry
     elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
       puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
     elsif @human_board.cells[firing_coords].ship.sunk?
