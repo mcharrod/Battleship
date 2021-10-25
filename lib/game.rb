@@ -34,9 +34,23 @@ class Game
      puts " #{@cpu_board.render}"
      puts "Enter the squares for the cruiser(3 spaces):"
      human_place_cruiser
-     puts "You put the ship down. This is your board: #{@human_board.render(true)}"
-     puts "Here's the cpu board dirty cheater:"
-     puts "#{@cpu_board.render(true)}"
+     puts "You put the ship down. This is your board: \n #{@human_board.render(true)}"
+     puts "Enter the squares for the submarine(2 spaces):"
+     human_place_sub
+     puts "You put the ship down. This is your board: \n #{@human_board.render(true)}"
+     sleep(3)
+     system "clear"
+     game_body
+   end
+
+   def game_body
+     puts "=============COMPUTER BOARD============= \n"
+     puts "#{@cpu_board.render(true)}\n"
+     puts "==============PLAYER BOARD=============="
+     puts "#{@human_board.render(true)}"
+   end
+
+   def game_end
    end
 
   def human_place_cruiser
@@ -55,11 +69,24 @@ class Game
     #smashed together word edcgecase -- a1a2a3
   end
 
-  # def human_place_sub
-  # end
+  def human_place_sub
+    submarine = Ship.new("Submarine", 2)
+    loop do
+      input = gets.chomp.tr(',', ' ').upcase.strip
+       sub_cords = input.split
+       if @human_board.valid_placement?(submarine, sub_cords)
+         @human_board.place(submarine, sub_cords)
+         break
+         break
+       else
+         puts "Not a valid placement."
+         puts "Enter the squares for the submarine(2 spaces):"
+       end
+     end
+  end
 
 
-  def cpu_generate_ships
+  def cpu_generate_cruiser
     cpu_cruiser = Ship.new("Cruiser", 3)
     loop do
       cruiser_cords = []
@@ -71,6 +98,9 @@ class Game
         break
       end
     end
+  end
+
+    def cpu_generate_sub
     cpu_sub = Ship.new("Submarine", 2)
     loop do
       sub_cords = []
@@ -81,8 +111,14 @@ class Game
         @cpu_board.place(cpu_sub, sub_cords)
         break
       end
-    end
+    end #e to computer class?
   end
+
+  def cpu_shot
+    firing_coords = @cpu_board.cells.keys.sample
+    @human_board.cells[firing_coords].fire_upon
+  end
+
 end
 
 
