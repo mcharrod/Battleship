@@ -2,6 +2,7 @@
 # bug  list:
 # lowercase chars in order a1a2a3
 # backwards placement freeze game a3a2a1
+  #smashed together word edcgecase -- a1a2a3
 #computer does not fire on same spot twice
 #human informed they fire on same spot
 #player input as variable
@@ -17,14 +18,17 @@ class Game
   attr_reader :human_board,
               :cpu_board,
               :cruiser_cords,
-              :cpu_player
+              :cpu_player,
+              :human_player
   def initialize
     @human_board = Board.new
+    @human_player = HumanPlayer.new
     @cpu_player  = CpuPlayer.new
+    @cpu_board   = cpu_player.cpu_board
+    @human_board = human_player.human_board
     # create an instance of the class;
     # THEN recall that instance and class
     # method.
-    @cpu_board   = @cpu_player.cpu_board
   end
 
   def welcome_message
@@ -36,8 +40,8 @@ class Game
        player_input = gets.chomp.downcase.strip
      end
     if player_input == "p"
-        cpu_generate_cruiser
-        cpu_generate_sub
+        @cpu_player.cpu_generate_cruiser
+        @cpu_player.cpu_generate_sub
         game_setup
     elsif player_input == "q"
       system "clear"
@@ -56,10 +60,10 @@ class Game
      puts "The cruiser is 3 units long and the submarine is two units long."
      puts " #{@cpu_board.render}"
      puts "Enter the squares for the cruiser(3 spaces):"
-     human_place_cruiser
+     @human_player.human_place_cruiser
      puts "You put the ship down. This is your board: \n #{@human_board.render(true)}"
      puts "Enter the squares for the submarine(2 spaces):"
-     human_place_sub
+     @human_player.human_place_sub
      puts "You put the ship down. This is your board: \n #{@human_board.render(true)}"
      sleep(3)
      system "clear"
@@ -68,7 +72,7 @@ class Game
 
    def game_body
      # call human class/ call cpu class
-     until human_lose || cpu_lose
+     until @human_player.human_lose? || @cpu_player.cpu_lose?
        puts "=============COMPUTER BOARD============= \n"
        puts "#{@cpu_board.render}\n"
        cpu_shot
@@ -76,6 +80,7 @@ class Game
        puts "#{@human_board.render(true)}"
        human_shot
       end
+      # if human_lose || @cpu_player.cpu_lose?
    end
 
    def cpu_shot
@@ -91,70 +96,6 @@ class Game
        puts "You sunk my boat!"
      end
    end
-
-   def human_lose_message
-     puts "CPU loses!"
-     sleep(3)
-     puts "Press p to play again, or q to quit."
-     player_input = gets.chomp.downcase.strip
-     until ["p","q"].include?(player_input)
-       puts "Invalid input. Try again!"
-       user_input = gets.chomp.downcase.strip
-       if player_input == "p"
-         welcome_message
-       elsif player_input == "q"
-         puts "Sleep with da fishes!!!"
-         sleep(2)
-         65.times do
-           puts "🐟🌊"
-           exit
-         end
-      end
-    end
-   end
-
-   def human_lose
-     all_sunk =  @human_board.cells.values.count do |cell|
-       if cell.ship != nil
-         cell.ship.sunk?
-       end
-       end
-       if all_sunk == 5
-         human_lose_message
-       end
-   end
-
-  def human_place_cruiser
-    cruiser = Ship.new("Cruiser", 3)
-    loop do
-      input = gets.chomp.tr(',', ' ').upcase.strip
-      cruiser_cords = input.split
-      if @human_board.valid_placement?(cruiser, cruiser_cords)
-        @human_board.place(cruiser, cruiser_cords)
-        break
-      else
-        puts "Not a valid placement."
-        puts "Enter the squares for the cruiser(3 spaces):"
-      end
-    end
-    #smashed together word edcgecase -- a1a2a3
-  end
-
-  def human_place_sub
-    submarine = Ship.new("Submarine", 2)
-    loop do
-      input = gets.chomp.tr(',', ' ').upcase.strip
-       sub_cords = input.split
-       if @human_board.valid_placement?(submarine, sub_cords)
-         @human_board.place(submarine, sub_cords)
-         break
-         break
-       else
-         puts "Not a valid placement."
-         puts "Enter the squares for the submarine(2 spaces):"
-       end
-     end
-  end
 
   def human_shot
     puts "Enter coordinates to fire upon, mon Capitan!"
