@@ -37,7 +37,6 @@ RSpec.describe Game do
     game = Game.new
     game.cpu_shot
     expect(game.human_board.cells.count {|key, value| value.fired_upon? == true}).to eq(1)
-    require "pry"; binding.pry
   end
   #
   # it "game_setup" do

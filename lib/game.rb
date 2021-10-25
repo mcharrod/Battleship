@@ -44,14 +44,25 @@ class Game
    end
 
    def game_body
+     require "pry"; binding.pry
+
      5.times do
        puts "=============COMPUTER BOARD============= \n"
        puts "#{@cpu_board.render}\n"
        cpu_shot
        puts "==============PLAYER BOARD=============="
-       puts "#{@human_board.render}"
+       puts "#{@human_board.render(true)}"
        human_shot
       end
+   end
+
+   def cpu_lose
+
+     @cpu_board.cells.ship.all.sunk?
+     puts "CPU Loses!"
+   end
+
+   def player_lose
    end
 
 

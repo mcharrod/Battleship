@@ -52,7 +52,7 @@ RSpec.describe Cell do
     cell_1.render
     expect(cell_1.render).to eq(".")
     cell_1.fire_upon
-    expect(cell_1.render).to eq("M")
+    expect(cell_1.render).to eq("\e[35mM\e[0m")
   end
 
   it 'renders with ship and counts hit' do
@@ -60,7 +60,7 @@ RSpec.describe Cell do
     cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)
     cell_2.fire_upon
-    expect(cell_2.render).to eq("H")
+    expect(cell_2.render).to eq("\e[31mH\e[0m")
     expect(cruiser.health).to eq(2)
   end
 
@@ -68,7 +68,7 @@ RSpec.describe Cell do
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)
-    expect(cell_2.render(true)).to eq("S")
+    expect(cell_2.render(true)).to eq("\e[36mS\e[0m")
   end
 
 
@@ -80,7 +80,7 @@ RSpec.describe Cell do
     cruiser.hit
     cruiser.hit
     expect(cruiser.sunk?).to eq(true)
-    expect(cell_2.render).to eq("X")
+    expect(cell_2.render).to eq("\e[31mX\e[0m")
   end
 
 
