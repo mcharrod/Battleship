@@ -13,14 +13,18 @@
 # need shot_fired counter, timer, intelligent computer, dynamic user generated board, custom ships
 
 
-
 class Game
   attr_reader :human_board,
               :cpu_board,
-              :cruiser_cords
+              :cruiser_cords,
+              :cpu_player
   def initialize
     @human_board = Board.new
-    @cpu_board   = Board.new
+    @cpu_player  = CpuPlayer.new
+    # create an instance of the class;
+    # THEN recall that instance and class
+    # method.
+    @cpu_board   = @cpu_player.cpu_board
   end
 
   def welcome_message
@@ -63,6 +67,7 @@ class Game
    end
 
    def game_body
+     # call human class/ call cpu class
      until human_lose || cpu_lose
        puts "=============COMPUTER BOARD============= \n"
        puts "#{@cpu_board.render}\n"
@@ -73,15 +78,18 @@ class Game
       end
    end
 
-   def cpu_lose
-    all_sunk = @cpu_board.cells.values.count do |cell|
-          if cell.ship != nil
-              cell.ship.sunk?
-            end
-          end
-      if all_sunk == 5
-        human_lose_message #needs be cpu_lose message
-      end
+   def cpu_shot
+     puts "Computer shot inbound!"
+     sleep(2)
+     firing_coords = @human_board.cells.keys.sample
+     @human_board.cells[firing_coords].fire_upon
+     if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
+       puts "Shot was a miss!"
+     elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
+       puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
+     elsif @human_board.cells[firing_coords].ship.sunk?
+       puts "You sunk my boat!"
+     end
    end
 
    def human_lose_message
@@ -168,49 +176,4 @@ class Game
       end
     end
   end
-
-  def cpu_generate_cruiser
-    cpu_cruiser = Ship.new("Cruiser", 3)
-    loop do
-      cruiser_cords = []
-      until cruiser_cords.length == cpu_cruiser.length do
-        cruiser_cords << @cpu_board.cells.keys.sample
-      end
-      if @cpu_board.valid_placement?(cpu_cruiser, cruiser_cords)
-        @cpu_board.place(cpu_cruiser, cruiser_cords)
-        break
-      end
-    end
-  end
-
-  def cpu_generate_sub
-    cpu_sub = Ship.new("Submarine", 2)
-    loop do
-      sub_cords = []
-      until sub_cords.length == cpu_sub.length do
-        sub_cords << @cpu_board.cells.keys.sample
-      end
-      if @cpu_board.valid_placement?(cpu_sub, sub_cords)
-        @cpu_board.place(cpu_sub, sub_cords)
-        break
-      end
-    end #e to computer class?
-  end
-
-  def cpu_shot
-    puts "Computer shot inbound!"
-    sleep(2)
-    firing_coords = @human_board.cells.keys.sample
-    @human_board.cells[firing_coords].fire_upon
-    if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
-      puts "Shot was a miss!"
-    elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
-      puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
-    elsif @human_board.cells[firing_coords].ship.sunk?
-      puts "You sunk my boat!"
-    end
-  end
 end
-
-
-
