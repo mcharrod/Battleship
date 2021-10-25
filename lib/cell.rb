@@ -31,8 +31,8 @@ class Cell
   end
 
   def render(reveal = false)
-      if reveal == true && !empty?
-        "\033[36m#{"S"}\033[0m" #needs test refactoring
+      if !fired_upon? && reveal == true && !empty?
+      "\033[36m#{"S"}\033[0m"
       elsif fired_upon? == false
         "."
       elsif fired_upon? && empty?

@@ -1,4 +1,18 @@
-require './lib/board'
+#
+# bug  list:
+# lowercase chars in order a1a2a3
+# backwards placement freeze game a3a2a1
+#computer does not fire on same spot twice
+#human informed they fire on same spot
+#player input as variable
+#number lineup on game setup
+#build out spec
+#q keeps game playing
+
+# feature list:
+# need shot_fired counter, timer, intelligent computer, dynamic user generated board, custom ships
+
+
 
 class Game
   attr_reader :human_board,
@@ -13,16 +27,21 @@ class Game
      puts "Welcome to BATTLESHIP \n" +
      "Enter p to play. Enter q to quit."
      player_input = gets.chomp.downcase.strip
-
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
        player_input = gets.chomp.downcase.strip
      end
     if player_input == "p"
-        cpu_generate_cruiser && cpu_generate_sub
+        cpu_generate_cruiser
+        cpu_generate_sub
         game_setup
     elsif player_input == "q"
-       puts "You can't touch dis boat!"
+      system "clear"
+      puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
+      sleep(2)
+      1000.times do
+        print "🐟🌊"
+      end
        exit
      end
    end
@@ -44,9 +63,7 @@ class Game
    end
 
    def game_body
-     require "pry"; binding.pry
-
-     5.times do
+     until human_lose || cpu_lose
        puts "=============COMPUTER BOARD============= \n"
        puts "#{@cpu_board.render}\n"
        cpu_shot
@@ -57,17 +74,47 @@ class Game
    end
 
    def cpu_lose
-
-     @cpu_board.cells.ship.all.sunk?
-     puts "CPU Loses!"
+    all_sunk = @cpu_board.cells.values.count do |cell|
+          if cell.ship != nil
+              cell.ship.sunk?
+            end
+          end
+      if all_sunk == 5
+        human_lose_message #needs be cpu_lose message
+      end
    end
 
-   def player_lose
+   def human_lose_message
+     puts "CPU loses!"
+     sleep(3)
+     puts "Press p to play again, or q to quit."
+     player_input = gets.chomp.downcase.strip
+     until ["p","q"].include?(player_input)
+       puts "Invalid input. Try again!"
+       user_input = gets.chomp.downcase.strip
+       if player_input == "p"
+         welcome_message
+       elsif player_input == "q"
+         puts "Sleep with da fishes!!!"
+         sleep(2)
+         65.times do
+           puts "🐟🌊"
+           exit
+         end
+      end
+    end
    end
 
-
-   # def game_end
-   # end
+   def human_lose
+     all_sunk =  @human_board.cells.values.count do |cell|
+       if cell.ship != nil
+         cell.ship.sunk?
+       end
+       end
+       if all_sunk == 5
+         human_lose_message
+       end
+   end
 
   def human_place_cruiser
     cruiser = Ship.new("Cruiser", 3)
@@ -112,7 +159,7 @@ class Game
           elsif @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].ship.sunk? == false && @cpu_board.cells[firing_coords].empty? == false
             puts "Hit on #{@cpu_board.cells[firing_coords].coordinate}!"
           elsif @cpu_board.cells[firing_coords].ship.sunk?
-            puts "You sunk my boat!"
+            puts "You sunk the cpu's ship!"
           end
         break
       else
@@ -121,8 +168,6 @@ class Game
       end
     end
   end
-
-
 
   def cpu_generate_cruiser
     cpu_cruiser = Ship.new("Cruiser", 3)
@@ -138,7 +183,7 @@ class Game
     end
   end
 
-    def cpu_generate_sub
+  def cpu_generate_sub
     cpu_sub = Ship.new("Submarine", 2)
     loop do
       sub_cords = []
@@ -165,7 +210,6 @@ class Game
       puts "You sunk my boat!"
     end
   end
-
 end
 
 
