@@ -17,8 +17,8 @@ class Cell
   end
 
   def fire_upon
-    if fired_upon == true
-      return
+    if fired_upon? == true
+      return 
     end
       @fired_upon = true
       if @ship != nil

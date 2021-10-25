@@ -84,37 +84,47 @@ class Game
    end
 
    def cpu_shot
-     puts "Computer shot inbound!"
-     sleep(2)
-     firing_coords = @human_board.cells.keys.sample
-     @human_board.cells[firing_coords].fire_upon
-     if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
-       puts "Shot was a miss!"
-     elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
-       puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
-     elsif @human_board.cells[firing_coords].ship.sunk?
-       puts "You sunk my boat!"
-     end
-   end
-
-  def human_shot
-    puts "Enter coordinates to fire upon, mon Capitan!"
-    loop do
-      firing_coords = gets.chomp.tr(',', ' ').upcase.strip
-      if @cpu_board.valid_coordinate?(firing_coords)
-        @cpu_board.cells[firing_coords].fire_upon
-          if @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].empty?
-            puts "Shot was a miss!"
-          elsif @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].ship.sunk? == false && @cpu_board.cells[firing_coords].empty? == false
-            puts "Hit on #{@cpu_board.cells[firing_coords].coordinate}!"
-          elsif @cpu_board.cells[firing_coords].ship.sunk?
-            puts "You sunk the cpu's ship!"
-          end
-        break
-      else
-        puts "That coordinate does not exist on the board."
-        puts "try again"
+        puts "Computer shot inbound!"
+        sleep(2)
+        firing_coords = @human_board.cells.keys.sample
+        if @human_board.cells[firing_coords].fired_upon? == true
+          puts "Computer shot same place. They're firing again now!"
+          cpu_shot
+        end
+          @human_board.cells[firing_coords].fire_upon
+        if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
+          puts "Shot on #{@human_board.cells[firing_coords].coordinate} was a miss!"
+        elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
+          puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
+        elsif @human_board.cells[firing_coords].ship.sunk?
+          puts "Computer sunk your boat!"
       end
     end
-  end
-end
+
+    def human_shot
+        puts "Enter coordinates to fire upon, mon Capitan!"
+        loop do
+          firing_coords = gets.chomp.tr(',', ' ').upcase.strip
+          if @cpu_board.valid_coordinate?(firing_coords) && @cpu_board.cells[firing_coords].fired_upon? == false
+            @cpu_board.cells[firing_coords].fire_upon
+              if @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].empty?
+                puts "Shot was a miss!"
+              elsif @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].ship.sunk? == false && @cpu_board.cells[firing_coords].empty? == false
+                puts "Hit on #{@cpu_board.cells[firing_coords].coordinate}!"
+              elsif @cpu_board.cells[firing_coords].ship.sunk?
+                puts "You sunk the cpu's ship!"
+              end
+            break
+            elsif @cpu_board.valid_coordinate?(firing_coords) == false
+              puts "That coordinate does not exist on the board."
+              puts "Try again:"
+              human_shot
+              break
+            elsif @cpu_board.cells[firing_coords].fired_upon? == true
+              puts "You've already fired on #{@cpu_board.cells[firing_coords].coordinate}. Try again:"
+              human_shot
+              break
+          end
+        end
+      end
+    end
