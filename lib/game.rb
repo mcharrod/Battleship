@@ -10,6 +10,7 @@
 #q keeps game playing
 
 # feature list:
+#enter cheat for enemys ship
 # need shot_fired counter, timer, intelligent computer, dynamic user generated board, custom ships
 
 
@@ -91,18 +92,18 @@ class Game
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
-       user_input = gets.chomp.downcase.strip
+       player_input = gets.chomp.downcase.strip
+     end
        if player_input == "p"
          welcome_message
        elsif player_input == "q"
          puts "Sleep with da fishes!!!"
          sleep(2)
-         65.times do
-           puts "🐟🌊"
-           exit
+         1000.times do
+           print "🐟🌊"
          end
-      end
-    end
+        exit
+     end
    end
 
    def human_lose
@@ -139,7 +140,6 @@ class Game
        sub_cords = input.split
        if @human_board.valid_placement?(submarine, sub_cords)
          @human_board.place(submarine, sub_cords)
-         break
          break
        else
          puts "Not a valid placement."
@@ -211,6 +211,5 @@ class Game
     end
   end
 end
-
 
 
