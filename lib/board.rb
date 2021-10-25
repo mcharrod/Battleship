@@ -21,9 +21,17 @@ class Board
     }
   end
 
-  def valid_coordinate?(coordinate)
-    @cells.has_key?(coordinate)
-  end
+  def valid_coordinate?(coordinates)
+    if (coordinates).is_a? String
+      @cells.has_key?(coordinates)
+    elsif (coordinates).is_a? Array
+      coordinates.all? do |coordinate|
+        @cells.has_key?(coordinate.upcase)
+      end
+      end
+    end
+
+
 
   def valid_placement?(ship, coordinates)
     return false if coordinates.count != ship.length
