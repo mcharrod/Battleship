@@ -1,3 +1,5 @@
+
+
 #
 # bug  list:
 # lowercase chars in order a1a2a3
@@ -11,7 +13,6 @@
 #q keeps game playing
 
 # feature list:
-#enter cheat for enemys ship
 # need shot_fired counter, timer, intelligent computer, dynamic user generated board, custom ships
 
 
@@ -32,13 +33,17 @@ class Game
     # method.
   end
 
+  def player_input
+    gets.chomp
+  end
+
   def welcome_message
      puts "Welcome to BATTLESHIP \n" +
      "Enter p to play. Enter q to quit."
-     player_input = gets.chomp.downcase.strip
+     player_input.downcase.strip
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
-       player_input = gets.chomp.downcase.strip
+       player_input.downcase.strip
      end
     if player_input == "p"
         @cpu_player.cpu_generate_cruiser
@@ -101,7 +106,7 @@ class Game
   def human_shot
     puts "Enter coordinates to fire upon, mon Capitan!"
     loop do
-      firing_coords = gets.chomp.tr(',', ' ').upcase.strip
+      firing_coords = player_input.tr(',', ' ').upcase.strip
       if @cpu_board.valid_coordinate?(firing_coords)
         @cpu_board.cells[firing_coords].fire_upon
           if @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].empty?
@@ -119,3 +124,5 @@ class Game
     end
   end
 end
+
+
