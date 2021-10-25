@@ -19,7 +19,7 @@ class Game
        player_input = gets.chomp.downcase.strip
      end
     if player_input == "p"
-        cpu_generate_ships
+        cpu_generate_cruiser && cpu_generate_sub
         game_setup
     elsif player_input == "q"
        puts "You can't touch dis boat!"
@@ -44,14 +44,19 @@ class Game
    end
 
    def game_body
-     puts "=============COMPUTER BOARD============= \n"
-     puts "#{@cpu_board.render(true)}\n"
-     puts "==============PLAYER BOARD=============="
-     puts "#{@human_board.render(true)}"
+     5.times do
+       puts "=============COMPUTER BOARD============= \n"
+       puts "#{@cpu_board.render}\n"
+       cpu_shot
+       puts "==============PLAYER BOARD=============="
+       puts "#{@human_board.render}"
+       human_shot
+      end
    end
 
-   def game_end
-   end
+
+   # def game_end
+   # end
 
   def human_place_cruiser
     cruiser = Ship.new("Cruiser", 3)
@@ -85,6 +90,28 @@ class Game
      end
   end
 
+  def human_shot
+    puts "Enter coordinates to fire upon, mon Capitan!"
+    loop do
+      firing_coords = gets.chomp.tr(',', ' ').upcase.strip
+      if @cpu_board.valid_coordinate?(firing_coords)
+        @cpu_board.cells[firing_coords].fire_upon
+          if @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].empty?
+            puts "Shot was a miss!"
+          elsif @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].ship.sunk? == false && @cpu_board.cells[firing_coords].empty? == false
+            puts "Hit on #{@cpu_board.cells[firing_coords].coordinate}!"
+          elsif @cpu_board.cells[firing_coords].ship.sunk?
+            puts "You sunk my boat!"
+          end
+        break
+      else
+        puts "That coordinate does not exist on the board."
+        puts "try again"
+      end
+    end
+  end
+
+
 
   def cpu_generate_cruiser
     cpu_cruiser = Ship.new("Cruiser", 3)
@@ -115,8 +142,18 @@ class Game
   end
 
   def cpu_shot
-    firing_coords = @cpu_board.cells.keys.sample
+    puts "Computer shot inbound!"
+    sleep(2)
+    firing_coords = @human_board.cells.keys.sample
     @human_board.cells[firing_coords].fire_upon
+    if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
+      puts "Shot was a miss!"
+      require "pry"; binding.pry
+    elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
+      puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
+    elsif @human_board.cells[firing_coords].ship.sunk?
+      puts "You sunk my boat!"
+    end
   end
 
 end
