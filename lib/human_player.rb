@@ -6,14 +6,15 @@ class HumanPlayer
   end
 
   def human_lose?
-    all_sunk =  @human_board.cells.values.count do |cell|
-      if cell.ship != nil
-        cell.ship.sunk?
-        end
+    all_sunk = @human_board.cells.values.count do |cell|
+      cell.ship != nil && cell.ship.sunk?
       end
-    if all_sunk == 5
-      return true
-    end
+    all_placed_not_yet_sunk = @human_board.cells.values.count do |cell|
+        cell.ship
+      end
+    if all_sunk == all_placed_not_yet_sunk
+       return true
+     end
   end
 
   def human_place_ship

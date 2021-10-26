@@ -18,7 +18,7 @@ class CpuPlayer
 
   def cpu_generate_cruiser
     2.times do
-    cruiser_names = ['Yamoto', 'Yorktown', 'Enterprise', 'Hornet', 'Lexington', 'Bismarck', 'Jolly Rancher']
+    cruiser_names = ['IJN Yamoto', 'USS Jolly Bumblebee Nuclear Supercarrier of Eternal Liberation', 'HMS David Bowie', 'MEMECRUISER']
     cruiser_lengths =[1,2,3,4]
     cruiser_name = cruiser_names.sample
     cruiser_length = cruiser_lengths.sample
@@ -35,18 +35,4 @@ class CpuPlayer
     end
     end
   end
-
-  # def cpu_generate_sub
-  #   cpu_sub = Ship.new("Submarine", 2)
-  #   loop do
-  #     sub_cords = []
-  #     until sub_cords.length == cpu_sub.length do
-  #       sub_cords << @cpu_board.cells.keys.sample
-  #     end
-  #     if @cpu_board.valid_placement?(cpu_sub, sub_cords)
-  #       @cpu_board.place(cpu_sub, sub_cords)
-  #       break
-  #     end
-  #   end
-  # end
 end
