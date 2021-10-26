@@ -70,7 +70,7 @@ RSpec.describe Board do
   end
 
 
-  it "place_ship" do
+  it 'place_ship' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -93,7 +93,7 @@ RSpec.describe Board do
     expect(cell_16.ship).to eq(nil)
   end
 
-  it "overlap" do
+  it 'overlap' do
     board = Board.new
     cruiser = Ship.new("MemeCruiser", 3)
     cruiser2 = Ship.new("Badcruiser", 3)
@@ -104,19 +104,12 @@ RSpec.describe Board do
     expect(cell_1.ship).to eq(cruiser)
   end
 
-  it "render" do
+  it 'render' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     expect(board.render).to eq("  1 2 3 4 \nA . . . .\nB . . . .\nC . . . .\nD . . . .\n")
     expect(board.render(true)).to eq("  1 2 3 4 \nA \e[36mS\e[0m \e[36mS\e[0m \e[36mS\e[0m .\nB . . . .\nC . . . .\nD . . . .\n")
   end
-
-
-
-
-
-
-
 end
 

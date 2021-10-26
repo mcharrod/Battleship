@@ -64,7 +64,7 @@ RSpec.describe Cell do
     expect(cruiser.health).to eq(2)
   end
 
-  it "renders reveal with true" do
+  it 'renders reveal with true' do
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)
@@ -72,7 +72,7 @@ RSpec.describe Cell do
   end
 
 
-  it "renders with ship and sink" do
+  it 'renders with ship and sink' do
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)

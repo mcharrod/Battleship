@@ -49,7 +49,7 @@ class Game
      @human_player.human_place_ship
      puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
      system "clear"
-     puts "Prepare to be Navally Engaged!!!"
+     puts "Prepare to be battle!!!"
      sleep(3)
      system "clear"
      game_body

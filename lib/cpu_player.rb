@@ -16,7 +16,7 @@ class CpuPlayer
      end
   end
 
-  def cpu_generate_cruiser
+  def cpu_generate_cruiser #update to generate ship
     2.times do
     cruiser_names = ['IJN Yamoto', 'USS Jolly Bumblebee Nuclear Supercarrier of Eternal Liberation', 'HMS David Bowie', 'MEMECRUISER']
     cruiser_lengths =[1,2,3,4]

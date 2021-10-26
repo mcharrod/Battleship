@@ -30,5 +30,4 @@ RSpec.describe HumanPlayer do
     cruiser.hit
     expect(human.human_lose?).to be(true)
   end
-
 end
