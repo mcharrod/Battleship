@@ -11,12 +11,13 @@ class Game
     @cpu_player  = CpuPlayer.new
     @cpu_board   = cpu_player.cpu_board
     @human_board = human_player.human_board
+    @unbesmirched_coords = @human_board.cells.keys
   end
 
   def welcome_message
     system "clear"
     sleep(3)
-     puts "Welcome to BATTLESHIP \n" +
+     puts "\e[1m#{"Welcome to BATTLESHIP \n"}\e[22m" +
      "Enter p to play. Enter q to quit."
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
@@ -57,10 +58,13 @@ class Game
 
    def game_body
      until @human_player.human_lose? || @cpu_player.cpu_lose?
-       puts "=============COMPUTER BOARD============= \n"
+       puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
        puts "#{@cpu_board.render(true)}\n"
        cpu_shot
-       puts "==============PLAYER BOARD=============="
+       if @human_player.human_lose?
+         human_lose_message
+       end
+       puts "\e[32m#{"==============PLAYER BOARD=============="}\e[0m"
        puts "#{@human_board.render(true)}"
        human_shot
       end
@@ -133,14 +137,13 @@ class Game
    def cpu_shot
      puts "Computer shot inbound!"
      sleep(2)
-     unbesmirched_coords = @human_board.cells.keys
-     firing_coords = unbesmirched_coords.sample
-     unbesmirched_coords.delete(firing_coords)
+     firing_coords = @unbesmirched_coords.sample
+     @unbesmirched_coords.delete(firing_coords)
      @human_board.cells[firing_coords].fire_upon
      if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
-       puts "Shot was a miss!"
+       puts "Shot was a miss on #{firing_coords}!"
      elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
-       puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
+       puts "Hit on #{firing_coords}! Ouch!"
      elsif @human_board.cells[firing_coords].ship.sunk?
        puts "I sunk your ship #{human_board.cells[firing_coords].ship.name}!"
      end
