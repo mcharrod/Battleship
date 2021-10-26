@@ -17,7 +17,7 @@ class Game
   def welcome_message
     system "clear"
     sleep(3)
-     puts "\e[1m#{"Welcome to BATTLESHIP \n"}\e[22m" +
+     puts "Welcome to BATTLESHIP \n" +
      "Enter p to play. Enter q to quit."
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
@@ -155,15 +155,15 @@ class Game
       if @cpu_board.valid_coordinate?(firing_coords) && @cpu_board.cells[firing_coords].fired_upon? == false
         @cpu_board.cells[firing_coords].fire_upon
           if @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].empty?
-            puts "Shot was a miss!"
+            puts "Shot was a miss on #{firing_coords}!"
           elsif @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].ship.sunk? == false && @cpu_board.cells[firing_coords].empty? == false
-            puts "Hit on #{@cpu_board.cells[firing_coords].coordinate}!"
+            puts "Hit on #{firing_coords}!"
           elsif @cpu_board.cells[firing_coords].ship.sunk?
-            puts "You sunk the cpu's ship the #{@cpu_board.cells[firing_coords].ship.name}!"
+            puts "You sunk the cpu's ship The #{@cpu_board.cells[firing_coords].ship.name} with your hit on #{firing_coords}!"
           end
         elsif @cpu_board.valid_coordinate?(firing_coords) == false
-          puts "That coordinate does not exist on the board."
-          puts "try again"
+          puts "That coordinate is out of range! Fire again!"
+          human_shot
         elsif @cpu_board.cells[firing_coords].fired_upon? == true
           puts "You've already fired on #{@cpu_board.cells[firing_coords].coordinate}. Try again!"
           human_shot
