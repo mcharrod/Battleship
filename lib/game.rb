@@ -23,7 +23,6 @@ class Game
      end
     if player_input == "p"
         @cpu_player.cpu_generate_cruiser
-        @cpu_player.cpu_generate_sub
         game_setup
     elsif player_input == "q"
       system "clear"
@@ -57,7 +56,7 @@ class Game
    def game_body
      until @human_player.human_lose? || @cpu_player.cpu_lose?
        puts "=============COMPUTER BOARD============= \n"
-       puts "#{@cpu_board.render}\n"
+       puts "#{@cpu_board.render(true)}\n"
        cpu_shot
        puts "==============PLAYER BOARD=============="
        puts "#{@human_board.render(true)}"
@@ -148,7 +147,7 @@ class Game
           elsif @cpu_board.cells[firing_coords].fired_upon? && @cpu_board.cells[firing_coords].ship.sunk? == false && @cpu_board.cells[firing_coords].empty? == false
             puts "Hit on #{@cpu_board.cells[firing_coords].coordinate}!"
           elsif @cpu_board.cells[firing_coords].ship.sunk?
-            puts "You sunk the cpu's #{@cpu_board.cells[firing_coords].ship.name}!"
+            puts "You sunk the cpu's ship the #{@cpu_board.cells[firing_coords].ship.name}!"
           end
         elsif @cpu_board.valid_coordinate?(firing_coords) == false
           puts "That coordinate does not exist on the board."
