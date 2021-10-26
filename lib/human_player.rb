@@ -26,7 +26,7 @@ class HumanPlayer
     ship_length = gets.chomp.strip.to_i
     if ship_length > 4 || ship_length == 0
       puts "Not a valid length."
-      human_ship_setup
+      human_place_ship
     else
       ship = Ship.new(ship_name, ship_length)
       puts "Now, enter the coordinates on this grid.."
@@ -42,6 +42,6 @@ class HumanPlayer
         puts "Enter the squares for your ship #{ship_name}:"
         end
       end
-    end 
+    end
   end
 end

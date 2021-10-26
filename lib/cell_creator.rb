@@ -17,17 +17,3 @@ class CellCreator
     @board_cells
   end
 end
-
-  # def custom_cells
-  #   rows = gets.chomp.strip.split
-  #   columns = gets.chomp.strip.split
-  #   grid = rows.product(columns)
-  #   grid = grid.map do |square|
-  #     square.join
-  #   end
-  #   grid.each do |cell|
-  #     @board_cells[cell] = Cell.new(cell)
-  #   end
-  #     @board_cells
-  #   end
-  # end

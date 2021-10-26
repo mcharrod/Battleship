@@ -33,7 +33,7 @@ class Game
       puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
       sleep(2)
       1000.times do
-        print "🐟🌊"
+        print "🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊"
       end
        exit
      end
@@ -65,9 +65,10 @@ class Game
    end
 
    def game_body
+     @timer_start
      until @human_player.human_lose? || @cpu_player.cpu_lose?
        puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
-       puts "#{@cpu_board.render(true)}\n"
+       puts "#{@cpu_board.render}\n"
        cpu_shot
        if @human_player.human_lose?
          human_lose_message
@@ -88,7 +89,7 @@ class Game
      puts @cpu_board.render
      puts "ENEMY FLEET ELIMINATED"
      sleep(2)
-     puts "You win this time, Captain! Would you like to play again?"
+     puts "You win this time, Captain #{@player_name}! Would you like to play again?"
      puts "Press P to play again, Q to quit."
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
@@ -110,9 +111,10 @@ class Game
    end
 
    def human_lose_message
+     sleep(2)
      puts @cpu_board.render(true)
      puts "PLAYER FLEET ELIMINATED"
-     puts "You lose, Captain! Would you like to play again?"
+     puts "You lose, Captain #{@player_name}! Would you like to play again?"
      puts "Press P to play again, Q to quit."
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
