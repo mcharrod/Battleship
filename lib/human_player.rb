@@ -21,6 +21,10 @@ class HumanPlayer
     ship_name = gets.chomp.strip
     puts "Enter your ships length! *4 or fewer chars"
     ship_length = gets.chomp.strip.to_i
+    if ship_length > 4
+      puts "Not a valid placement"
+      human_place_ship
+    end
     ship = Ship.new(ship_name, ship_length)
     puts "Now, enter the coordinates on this grid.."
     puts @human_board.render
@@ -32,7 +36,7 @@ class HumanPlayer
         break
       else
         puts "Not a valid placement."
-        puts "Enter the squares for the HMS #{ship_name}:"
+        puts "Enter the squares for your ship #{ship_name}:"
       end
     end
 

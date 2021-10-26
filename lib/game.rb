@@ -41,11 +41,12 @@ class Game
      puts "You now need to lay out your two ships."
      puts "Enter a ship with a length 4 or fewer spaces."
      @human_player.human_place_ship
-     puts "You put the cruiser down. This is your board: \n #{@human_board.render(true)}"
-     puts "Enter the squares for the submarine(2 spaces):"
-     @human_player.human_place_ship
-     puts "You put the submarine down. This is your board: \n #{@human_board.render(true)}"
+     puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
      sleep(3)
+     puts "You now need to lay out your second ship."
+     puts "Enter a ship with a length 4 or fewer spaces."
+     @human_player.human_place_ship
+     puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
      system "clear"
      puts "Prepare to be Navally Engaged!!!"
      sleep(3)
@@ -133,7 +134,7 @@ class Game
      elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
        puts "Hit on #{@human_board.cells[firing_coords].coordinate}! Ouch!"
      elsif @human_board.cells[firing_coords].ship.sunk?
-       puts "I sunk your #{human_board.cells[firing_coords].ship.name}!"
+       puts "I sunk your ship #{human_board.cells[firing_coords].ship.name}!"
      end
    end
 
