@@ -133,7 +133,9 @@ class Game
    def cpu_shot
      puts "Computer shot inbound!"
      sleep(2)
-     firing_coords = @human_board.cells.keys.sample
+     unbesmirched_coords = @human_board.cells.keys
+     firing_coords = unbesmirched_coords.sample
+     unbesmirched_coords.delete(firing_coords)
      @human_board.cells[firing_coords].fire_upon
      if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
        puts "Shot was a miss!"
