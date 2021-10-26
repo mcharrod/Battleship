@@ -17,6 +17,7 @@ class CpuPlayer
   end
 
   def cpu_generate_cruiser
+    2.times do
     cruiser_names = ['Yamoto', 'Yorktown', 'Enterprise', 'Hornet', 'Lexington', 'Bismarck', 'Jolly Rancher']
     cruiser_lengths =[1,2,3,4]
     cruiser_name = cruiser_names.sample
@@ -31,6 +32,7 @@ class CpuPlayer
         @cpu_board.place(cpu_cruiser, cruiser_cords)
         break
       end
+    end
     end
   end
 

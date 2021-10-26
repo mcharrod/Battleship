@@ -14,6 +14,8 @@ class Game
   end
 
   def welcome_message
+    system "clear"
+    sleep(3)
      puts "Welcome to BATTLESHIP \n" +
      "Enter p to play. Enter q to quit."
      player_input = gets.chomp.downcase.strip
@@ -71,6 +73,9 @@ class Game
    end
 
    def human_win_message
+     puts @cpu_board.render
+     puts "ENEMY FLEET ELIMINATED"
+     sleep(2)
      puts "You win this time, Captain! Would you like to play again?"
      puts "Press P to play again, Q to quit."
      player_input = gets.chomp.downcase.strip
@@ -94,6 +99,8 @@ class Game
 
 
    def human_lose_message
+     puts @cpu_board.render(true)
+     puts "PLAYER FLEET ELIMINATED"
      puts "You lose, Captain! Would you like to play again?"
      puts "Press P to play again, Q to quit."
      player_input = gets.chomp.downcase.strip
