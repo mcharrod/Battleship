@@ -12,13 +12,14 @@ class Game
     @cpu_board   = cpu_player.cpu_board
     @human_board = human_player.human_board
     @unbesmirched_coords = @human_board.cells.keys
+    @player_name = nil
   end
 
   def welcome_message
     system "clear"
     sleep(3)
      puts "Welcome to BATTLESHIP \n" +
-     "Enter p to play. Enter q to quit."
+     "Enter P to play. Enter Q to quit."
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
@@ -39,16 +40,23 @@ class Game
    end
 
    def game_setup
+     system "clear"
+     puts "Enter your name:"
+     @player_name = gets.chomp.strip
+     system "clear"
+     sleep(1)
+     puts "Greetings, captain #{@player_name}."
+     sleep(1)
      puts "I have laid out my ships on the grid."
+     sleep(1)
      puts "You now need to lay out your two ships."
-     puts "Enter a ship with a length 4 or fewer spaces."
      @human_player.human_place_ship
      puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
-     sleep(3)
+     sleep(2)
      puts "You now need to lay out your second ship."
-     puts "Enter a ship with a length 4 or fewer spaces."
      @human_player.human_place_ship
      puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
+     sleep(2)
      system "clear"
      puts "Prepare to be battle!!!"
      sleep(3)
@@ -100,7 +108,6 @@ class Game
        exit
      end
    end
-
 
    def human_lose_message
      puts @cpu_board.render(true)
