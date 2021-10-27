@@ -15,11 +15,20 @@ class Game
     @player_name = nil
   end
 
+  def ascii_welcome
+    puts " \e[36m#{"
+    dBBBBb dBBBBBb  dBBBBBBP dBBBBBBP dBP    dBBBP.dBBBBP   dBP dBP dBP dBBBBBb
+       dBP      BB                                BP                        dB'
+   dBBBK'   dBP BB   dBP      dBP   dBP    dBBP   `BBBBb  dBBBBBP dBP   dBBBP'
+  dB' db   dBP  BB  dBP      dBP   dBP    dBP        dBP dBP dBP dBP   dBP
+ dBBBBP'  dBBBBBBB dBP      dBP   dBBBBP dBBBBP dBBBBP' dBP dBP dBP   dBP  "}\e[0m"
+  end
+
   def welcome_message
     system "clear"
     sleep(3)
-     puts "Welcome to BATTLESHIP \n" +
-     "Enter P to play. Enter Q to quit."
+     ascii_welcome
+     puts "\n \e[1m#{"\n Enter P to play. Enter Q to quit."}\e[22m"
      player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
@@ -30,7 +39,7 @@ class Game
         game_setup
     elsif player_input == "q"
       system "clear"
-      puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
+      puts "\e[36m#{"Sleep with da fishes!!!"}\e[0m"
       sleep(2)
       1000.times do
         print "🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊"
@@ -41,13 +50,13 @@ class Game
 
    def game_setup
      system "clear"
-     puts "Enter your name:"
+     puts "Enter your name, mariner:"
      @player_name = gets.chomp.strip
      system "clear"
      sleep(1)
      puts "Greetings, captain #{@player_name}."
      sleep(1)
-     puts "I have laid out my ships on the grid."
+     puts "I have laid out my two ships on the grid."
      sleep(1)
      puts "You now need to lay out your two ships."
      @human_player.human_place_ship
@@ -58,7 +67,7 @@ class Game
      puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
      sleep(2)
      system "clear"
-     puts "Prepare to be battle!!!"
+     puts "Enemy ships spotted -- prepare for battle!"
      sleep(3)
      system "clear"
      game_body
@@ -67,8 +76,8 @@ class Game
    def game_body
      @timer_start
      until @human_player.human_lose? || @cpu_player.cpu_lose?
-       puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
-       puts "#{@cpu_board.render}\n"
+       puts  "\e[36m#{"=============COMPUTER BOARD============="}\e[0m"
+       puts "#{@cpu_board.render}"
        cpu_shot
        if @human_player.human_lose?
          human_lose_message
@@ -101,7 +110,7 @@ class Game
       welcome_message
     elsif player_input == "q"
       system "clear"
-      puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
+      puts "\e[36m#{"Sleep with da fishes!!!"}\e[0m"
       sleep(2)
       1000.times do
         print "🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊"
@@ -150,11 +159,11 @@ class Game
      @unshot_cords.delete(firing_coords)
      @human_board.cells[firing_coords].fire_upon
      if @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].empty?
-       puts "Shot was a miss on #{firing_coords}!"
+       puts "My shot was a miss on #{firing_coords}!"
      elsif @human_board.cells[firing_coords].fired_upon? && @human_board.cells[firing_coords].ship.sunk? == false && @human_board.cells[firing_coords].empty? == false
-       puts "Hit on #{firing_coords}! Ouch!"
+       puts "I hit you on #{firing_coords}! Ouch!"
      elsif @human_board.cells[firing_coords].ship.sunk?
-       puts "I sunk your ship #{human_board.cells[firing_coords].ship.name}!"
+       puts "I sunk your ship #{human_board.cells[firing_coords].ship.name} with my hit on #{firing_coords}!"
      end
    end
 

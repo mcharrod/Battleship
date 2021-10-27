@@ -30,7 +30,7 @@ class HumanPlayer
     else
       ship = Ship.new(ship_name, ship_length)
       puts "Now, enter the coordinates on this grid.."
-      puts @human_board.render
+      puts @human_board.render(true)
       loop do
         input = gets.chomp.tr(',', ' ').upcase.strip
       if input.length == (ship_length * 2)
