@@ -33,6 +33,9 @@ class HumanPlayer
       puts @human_board.render
       loop do
         input = gets.chomp.tr(',', ' ').upcase.strip
+      if input.length == (ship_length * 2)
+        input = input.gsub(/(.{2})/, '\1 ').strip
+      end
         cords = input.split
       if @human_board.valid_placement?(ship, cords)
         @human_board.place(ship, cords)
