@@ -24,7 +24,6 @@ class Game
 
     until ["p","q"].include?(player_input)
       puts "Invalid input. Try again!"
-      player_input = gets.chomp.downcase.strip
     end
 
     if player_input == "p"
@@ -43,7 +42,7 @@ class Game
 
   def game_setup
      system "clear"
-     print "Enter your name:"
+     print "Enter your name: "
      @player_name = gets.chomp.strip
      system "clear"
      sleep(1)
@@ -67,31 +66,23 @@ class Game
    end
 
   def game_body
-    if player_input == "q"
-      system "clear"
-      puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
-      exit
-    elsif
-      @timer_start
-      binding.pry
-      until @human_player.human_lose? || @cpu_player.cpu_lose?
-        puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
-        puts "#{@cpu_board.render}\n"
-        cpu_shot
+    until @human_player.human_lose? || @cpu_player.cpu_lose?
+      puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
+      puts "#{@cpu_board.render}\n"
+      cpu_shot
 
-        if @human_player.human_lose?
-          human_lose_message
-        end
-        puts "\e[32m#{"==============PLAYER BOARD=============="}\e[0m"
-       puts "#{@human_board.render(true)}"
-       human_shot
-      end
       if @human_player.human_lose?
         human_lose_message
-      elsif
-        @cpu_player.cpu_lose?
-        human_win_message
       end
+      puts "\e[32m#{"==============PLAYER BOARD=============="}\e[0m"
+     puts "#{@human_board.render(true)}"
+     human_shot
+    end
+    if @human_player.human_lose?
+      human_lose_message
+    elsif
+      @cpu_player.cpu_lose?
+      human_win_message
     end
    end
 
@@ -101,10 +92,9 @@ class Game
      sleep(2)
      puts "You win this time, Captain #{@player_name}! Would you like to play again?"
      puts "Press P to play again, Q to quit"
-     # player_input = gets.chomp.downcase.strip
+     player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
-       # player_input = gets.chomp.downcase.strip
      end
     if player_input == "p"
       clear_board

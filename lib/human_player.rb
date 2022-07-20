@@ -17,8 +17,9 @@ class HumanPlayer
      end
   end
 
+
   def human_place_ship
-    puts "Enter your ship's name:"
+    print "Enter your ship's name: "
     ship_name = gets.chomp.strip
     (1)
     puts "Enter your ship's length(min 1, max 4)"
@@ -26,6 +27,7 @@ class HumanPlayer
     ship_length = gets.chomp.strip.to_i
     if ship_length > 4 || ship_length == 0
       puts "Not a valid length."
+      # future refactor: stop asking user to name ship after invalid input 
       human_place_ship
     else
       ship = Ship.new(ship_name, ship_length)
