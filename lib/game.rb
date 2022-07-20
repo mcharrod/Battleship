@@ -7,40 +7,43 @@ class Game
               :human_player
   def initialize
     @human_player = HumanPlayer.new
-    @cpu_player  = CpuPlayer.new
-    @cpu_board   = cpu_player.cpu_board
-    @human_board = human_player.human_board
+    @cpu_player   = CpuPlayer.new
+    @cpu_board    = cpu_player.cpu_board
+    @human_board  = human_player.human_board
     @unshot_cords = @human_board.cells.keys
-    @player_name = nil
+    @player_name  = nil
   end
 
   def welcome_message
     system "clear"
     sleep(3)
-     puts "Welcome to BATTLESHIP \n" +
-     "Enter P to play. Enter Q to quit."
-     player_input = gets.chomp.downcase.strip
-     until ["p","q"].include?(player_input)
-       puts "Invalid input. Try again!"
-       player_input = gets.chomp.downcase.strip
-     end
+    puts "Welcome to BATTLESHIP \n" +
+    "Enter P to play. Enter Q to quit."
+
+    player_input = gets.chomp.downcase.strip
+
+    until ["p","q"].include?(player_input)
+      puts "Invalid input. Try again!"
+      player_input = gets.chomp.downcase.strip
+    end
+
     if player_input == "p"
-        @cpu_player.cpu_generate_cruiser
-        game_setup
+      @cpu_player.cpu_generate_cruiser
+      game_setup
     elsif player_input == "q"
       system "clear"
       puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
       sleep(2)
-      1000.times do
-        print "🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊"
-      end
-       exit
-     end
+        1000.times do
+          print "🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊"
+        end
+      exit
+    end
    end
 
-   def game_setup
+  def game_setup
      system "clear"
-     puts "Enter your name:"
+     print "Enter your name:"
      @player_name = gets.chomp.strip
      system "clear"
      sleep(1)
@@ -63,16 +66,23 @@ class Game
      game_body
    end
 
-   def game_body
-     @timer_start
-     until @human_player.human_lose? || @cpu_player.cpu_lose?
-       puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
-       puts "#{@cpu_board.render}\n"
-       cpu_shot
-       if @human_player.human_lose?
-         human_lose_message
-       end
-       puts "\e[32m#{"==============PLAYER BOARD=============="}\e[0m"
+  def game_body
+    if player_input == "q"
+      system "clear"
+      puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
+      exit
+    elsif
+      @timer_start
+      binding.pry
+      until @human_player.human_lose? || @cpu_player.cpu_lose?
+        puts  "\e[36m#{"=============COMPUTER BOARD============= \n"}\e[0m"
+        puts "#{@cpu_board.render}\n"
+        cpu_shot
+
+        if @human_player.human_lose?
+          human_lose_message
+        end
+        puts "\e[32m#{"==============PLAYER BOARD=============="}\e[0m"
        puts "#{@human_board.render(true)}"
        human_shot
       end
@@ -82,6 +92,7 @@ class Game
         @cpu_player.cpu_lose?
         human_win_message
       end
+    end
    end
 
    def human_win_message
@@ -89,11 +100,11 @@ class Game
      puts "ENEMY FLEET ELIMINATED"
      sleep(2)
      puts "You win this time, Captain #{@player_name}! Would you like to play again?"
-     puts "Press P to play again, Q to quit."
-     player_input = gets.chomp.downcase.strip
+     puts "Press P to play again, Q to quit"
+     # player_input = gets.chomp.downcase.strip
      until ["p","q"].include?(player_input)
        puts "Invalid input. Try again!"
-       player_input = gets.chomp.downcase.strip
+       # player_input = gets.chomp.downcase.strip
      end
     if player_input == "p"
       clear_board
