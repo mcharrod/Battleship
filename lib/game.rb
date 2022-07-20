@@ -6,7 +6,6 @@ class Game
               :cpu_player,
               :human_player
   def initialize
-    @human_board = Board.new
     @human_player = HumanPlayer.new
     @cpu_player  = CpuPlayer.new
     @cpu_board   = cpu_player.cpu_board
@@ -58,7 +57,7 @@ class Game
      puts "You put your ship down. This is your board: \n #{@human_board.render(true)}"
      sleep(2)
      system "clear"
-     puts "Prepare to be battle!!!"
+     puts "Prepare to battle!!!"
      sleep(3)
      system "clear"
      game_body
@@ -127,7 +126,7 @@ class Game
     elsif player_input == "q"
       system "clear"
       puts "\e[34m#{"Sleep with da fishes!!!"}\e[0m"
-      sleep(2)
+      sleep(1)
       1000.times do
         print "🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊🐟🌊"
       end

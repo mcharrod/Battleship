@@ -42,7 +42,7 @@ class HumanPlayer
         break
       else
         puts "Not a valid placement."
-        puts "Enter the squares for your ship #{ship_name}:"
+        puts "Enter the coordinates for your ship #{ship_name}:"
         end
       end
     end

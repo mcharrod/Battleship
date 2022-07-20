@@ -13,5 +13,5 @@ RSpec.describe CellCreator do
       cell_creator = CellCreator.new
       expect(cell_creator.cells).to be_a(Hash)
       expect(cell_creator.cells.count).to eq(16)
-    end
+  end
 end
